@@ -90,7 +90,7 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
   const menuItems = getMenuItems();
 
   return (
-    <Sidebar className="w-64 border-r bg-card" collapsible="icon">
+    <Sidebar className="w-64 border-r bg-card">
       <SidebarContent className="bg-card">
         <div className="p-4 border-b">
           <div className="flex items-center gap-2">
@@ -98,22 +98,22 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
               <Building2 className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
-              <h2 className="font-bold text-lg">RealEstate</h2>
+              <h2 className="font-bold text-lg text-foreground">RealEstate</h2>
               <p className="text-xs text-muted-foreground capitalize">{userRole} Portal</p>
             </div>
           </div>
         </div>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-foreground">Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink to={item.url} end className={getNavCls}>
-                      <item.icon className="mr-2 h-4 w-4" />
-                      <span>{item.title}</span>
+                      <item.icon className="mr-2 h-4 w-4 shrink-0" />
+                      <span className="text-foreground">{item.title}</span>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
