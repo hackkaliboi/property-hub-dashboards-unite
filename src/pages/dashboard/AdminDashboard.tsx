@@ -1,7 +1,13 @@
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
+import { AnalyticsCharts } from "@/components/admin/AnalyticsCharts";
+import { UserManagement } from "@/components/admin/UserManagement";
+import { PropertyApproval } from "@/components/admin/PropertyApproval";
+import { SystemAlerts } from "@/components/admin/SystemAlerts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Building2, 
   Users, 
@@ -9,7 +15,11 @@ import {
   TrendingUp, 
   UserCheck, 
   FileText,
-  BarChart3
+  BarChart3,
+  AlertTriangle,
+  Shield,
+  Database,
+  Activity
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -45,21 +55,36 @@ export default function AdminDashboard() {
       description: "Waiting for first month data"
     },
     {
-      title: "Pending Approvals",
-      value: "0",
-      icon: FileText,
-      description: "No pending items"
+      title: "System Status",
+      value: "Healthy",
+      icon: Activity,
+      description: "All systems operational"
     }
   ];
 
   return (
     <DashboardLayout userRole="admin">
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-muted-foreground">
-            Welcome to your real estate platform control center
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold flex items-center gap-2">
+              <Shield className="h-8 w-8 text-destructive" />
+              Admin Dashboard
+            </h1>
+            <p className="text-muted-foreground">
+              Complete platform management and oversight
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline">
+              <Database className="mr-2 h-4 w-4" />
+              System Status
+            </Button>
+            <Button>
+              <BarChart3 className="mr-2 h-4 w-4" />
+              Generate Report
+            </Button>
+          </div>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -74,58 +99,70 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <RecentActivity 
-            activities={[]}
-            title="System Activity"
-          />
+        <SystemAlerts />
+
+        <Tabs defaultValue="analytics" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="users">User Management</TabsTrigger>
+            <TabsTrigger value="properties">Properties</TabsTrigger>
+            <TabsTrigger value="activity">Activity</TabsTrigger>
+          </TabsList>
           
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0">
-              <CardTitle className="text-base font-medium">
-                Platform Overview
-              </CardTitle>
-              <BarChart3 className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span>Properties Listed</span>
-                  <span className="font-medium">0</span>
+          <TabsContent value="analytics" className="space-y-6">
+            <AnalyticsCharts />
+          </TabsContent>
+          
+          <TabsContent value="users">
+            <UserManagement />
+          </TabsContent>
+          
+          <TabsContent value="properties">
+            <PropertyApproval />
+          </TabsContent>
+          
+          <TabsContent value="activity">
+            <Card>
+              <CardHeader>
+                <CardTitle>Platform Activity</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RecentActivity 
+                  activities={[]}
+                  title="Recent Platform Activity"
+                />
+                <div className="mt-6 grid gap-4 md:grid-cols-3">
+                  <Card className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Users className="h-4 w-4 text-primary" />
+                      <span className="font-medium">User Activity</span>
+                    </div>
+                    <p className="text-2xl font-bold">0</p>
+                    <p className="text-xs text-muted-foreground">Active sessions today</p>
+                  </Card>
+                  
+                  <Card className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Building2 className="h-4 w-4 text-success" />
+                      <span className="font-medium">Property Views</span>
+                    </div>
+                    <p className="text-2xl font-bold">0</p>
+                    <p className="text-xs text-muted-foreground">Views today</p>
+                  </Card>
+                  
+                  <Card className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <DollarSign className="h-4 w-4 text-accent" />
+                      <span className="font-medium">Transactions</span>
+                    </div>
+                    <p className="text-2xl font-bold">0</p>
+                    <p className="text-xs text-muted-foreground">Completed today</p>
+                  </Card>
                 </div>
-                <div className="w-full bg-muted rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full w-0"></div>
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span>Active Users</span>
-                  <span className="font-medium">0</span>
-                </div>
-                <div className="w-full bg-muted rounded-full h-2">
-                  <div className="bg-success h-2 rounded-full w-0"></div>
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span>Completed Transactions</span>
-                  <span className="font-medium">0</span>
-                </div>
-                <div className="w-full bg-muted rounded-full h-2">
-                  <div className="bg-accent h-2 rounded-full w-0"></div>
-                </div>
-              </div>
-              
-              <div className="pt-4 border-t">
-                <p className="text-xs text-muted-foreground text-center">
-                  Data will populate once users start interacting with the platform
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </DashboardLayout>
   );
