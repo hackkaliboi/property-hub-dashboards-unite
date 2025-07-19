@@ -26,6 +26,8 @@ import {
   Shield,
   UserCheck,
   Database,
+  TrendingUp,
+  Activity,
 } from "lucide-react";
 
 interface DashboardSidebarProps {
@@ -90,34 +92,53 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
   const menuItems = getMenuItems();
 
   return (
-    <Sidebar className="w-64 border-r bg-card">
-      <SidebarContent className="bg-card">
-        <div className="p-4 border-b">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center shrink-0">
-              <Building2 className="h-5 w-5 text-primary-foreground" />
+    <Sidebar className="w-64 lg:w-64 md:w-16 border-r bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/60">
+      <SidebarContent className="bg-transparent">
+        <div className="p-4 border-b border-border/50">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center shrink-0 shadow-sm">
+              <Building2 className="h-4 w-4 text-primary-foreground" />
             </div>
-            <div>
+            <div className="hidden md:block lg:block">
               <h2 className="font-bold text-lg text-foreground">RealEstate</h2>
               <p className="text-xs text-muted-foreground capitalize">{userRole} Portal</p>
             </div>
           </div>
         </div>
 
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-foreground">Navigation</SidebarGroupLabel>
+        <SidebarGroup className="px-2 py-4">
+          <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3 pb-2 hidden md:block lg:block">
+            Navigation
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink to={item.url} end className={getNavCls}>
-                      <item.icon className="mr-2 h-4 w-4 shrink-0" />
-                      <span className="text-foreground">{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+            <SidebarMenu className="space-y-1">
+              {menuItems.map((item) => {
+                const IconComponent = item.icon;
+                const active = isActive(item.url);
+                
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <NavLink 
+                        to={item.url} 
+                        end 
+                        className={`
+                          flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200
+                          ${active 
+                            ? "bg-primary text-primary-foreground shadow-sm" 
+                            : "text-foreground hover:bg-muted/60 hover:text-foreground"
+                          }
+                        `}
+                      >
+                        <IconComponent className="h-5 w-5 shrink-0" />
+                        <span className="hidden md:block lg:block font-medium text-sm truncate">
+                          {item.title}
+                        </span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
