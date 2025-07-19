@@ -90,11 +90,11 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
   const menuItems = getMenuItems();
 
   return (
-    <Sidebar className="w-64" collapsible="icon">
-      <SidebarContent>
-        <div className="p-4">
+    <Sidebar className="w-64 border-r bg-card" collapsible="icon">
+      <SidebarContent className="bg-card">
+        <div className="p-4 border-b">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
+            <div className="h-8 w-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center shrink-0">
               <Building2 className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
