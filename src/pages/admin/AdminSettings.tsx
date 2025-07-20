@@ -58,9 +58,31 @@ export default function AdminSettings() {
     }
   };
 
+  const applyPrimaryColor = (color: string) => {
+    const root = document.documentElement;
+    const colorMap = {
+      blue: "214 88% 27%",
+      green: "142 76% 36%", 
+      purple: "262 83% 58%",
+      orange: "25 95% 53%",
+      red: "0 84% 60%",
+      pink: "336 75% 60%"
+    };
+    
+    const selectedColor = colorMap[color as keyof typeof colorMap];
+    if (selectedColor) {
+      root.style.setProperty("--primary", selectedColor);
+      root.style.setProperty("--ring", selectedColor);
+    }
+  };
+
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    applyPrimaryColor(primaryColor);
+  }, [primaryColor]);
 
   return (
     <DashboardLayout userRole="admin">
@@ -309,33 +331,33 @@ export default function AdminSettings() {
                   <div className="space-y-2">
                     <Label>Color Theme</Label>
                     <div className="grid grid-cols-3 gap-3">
-                      <Button
-                        variant={theme === "light" ? "default" : "outline"}
-                        className="flex flex-col items-center gap-2 h-auto p-4"
-                        onClick={() => setTheme("light")}
-                      >
-                        <Sun className="h-5 w-5" />
-                        <span className="text-sm">Light</span>
-                        {theme === "light" && <Check className="h-4 w-4" />}
-                      </Button>
-                      <Button
-                        variant={theme === "dark" ? "default" : "outline"}
-                        className="flex flex-col items-center gap-2 h-auto p-4"
-                        onClick={() => setTheme("dark")}
-                      >
-                        <Moon className="h-5 w-5" />
-                        <span className="text-sm">Dark</span>
-                        {theme === "dark" && <Check className="h-4 w-4" />}
-                      </Button>
-                      <Button
-                        variant={theme === "system" ? "default" : "outline"}
-                        className="flex flex-col items-center gap-2 h-auto p-4"
-                        onClick={() => setTheme("system")}
-                      >
-                        <Monitor className="h-5 w-5" />
-                        <span className="text-sm">System</span>
-                        {theme === "system" && <Check className="h-4 w-4" />}
-                      </Button>
+                       <Button
+                         variant={theme === "light" ? "default" : "outline"}
+                         className="flex flex-col items-center gap-2 h-auto p-4 bg-card border-border"
+                         onClick={() => setTheme("light")}
+                       >
+                         <Sun className="h-5 w-5" />
+                         <span className="text-sm">Light</span>
+                         {theme === "light" && <Check className="h-4 w-4" />}
+                       </Button>
+                       <Button
+                         variant={theme === "dark" ? "default" : "outline"}
+                         className="flex flex-col items-center gap-2 h-auto p-4 bg-card border-border"
+                         onClick={() => setTheme("dark")}
+                       >
+                         <Moon className="h-5 w-5" />
+                         <span className="text-sm">Dark</span>
+                         {theme === "dark" && <Check className="h-4 w-4" />}
+                       </Button>
+                       <Button
+                         variant={theme === "system" ? "default" : "outline"}
+                         className="flex flex-col items-center gap-2 h-auto p-4 bg-card border-border"
+                         onClick={() => setTheme("system")}
+                       >
+                         <Monitor className="h-5 w-5" />
+                         <span className="text-sm">System</span>
+                         {theme === "system" && <Check className="h-4 w-4" />}
+                       </Button>
                     </div>
                   </div>
 
@@ -344,21 +366,21 @@ export default function AdminSettings() {
                   <div className="space-y-2">
                     <Label>Primary Color</Label>
                     <div className="grid grid-cols-3 gap-2">
-                      {colorOptions.map((color) => (
-                        <Button
-                          key={color.value}
-                          variant={primaryColor === color.value ? "default" : "outline"}
-                          className="flex items-center gap-2 h-auto p-3"
-                          onClick={() => setPrimaryColor(color.value)}
-                        >
-                          <div 
-                            className="w-4 h-4 rounded-full border border-border"
-                            style={{ backgroundColor: color.color }}
-                          />
-                          <span className="text-sm">{color.label}</span>
-                          {primaryColor === color.value && <Check className="h-4 w-4 ml-auto" />}
-                        </Button>
-                      ))}
+                       {colorOptions.map((color) => (
+                         <Button
+                           key={color.value}
+                           variant={primaryColor === color.value ? "default" : "outline"}
+                           className="flex items-center gap-2 h-auto p-3 bg-card border-border"
+                           onClick={() => setPrimaryColor(color.value)}
+                         >
+                           <div 
+                             className="w-4 h-4 rounded-full border border-border"
+                             style={{ backgroundColor: color.color }}
+                           />
+                           <span className="text-sm">{color.label}</span>
+                           {primaryColor === color.value && <Check className="h-4 w-4 ml-auto" />}
+                         </Button>
+                       ))}
                     </div>
                   </div>
                 </div>
