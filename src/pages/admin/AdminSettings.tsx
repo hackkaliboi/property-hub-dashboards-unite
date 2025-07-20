@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
   Settings, 
   Globe, 
@@ -15,10 +17,51 @@ import {
   Bell,
   Palette,
   Key,
-  Save
+  Save,
+  Sun,
+  Moon,
+  Monitor,
+  Check
 } from "lucide-react";
 
 export default function AdminSettings() {
+  const [theme, setTheme] = useState("system");
+  const [primaryColor, setPrimaryColor] = useState("blue");
+  const [fontSize, setFontSize] = useState("medium");
+  const [compactMode, setCompactMode] = useState(false);
+  const [animationsEnabled, setAnimationsEnabled] = useState(true);
+
+  // Color options for primary theme
+  const colorOptions = [
+    { value: "blue", label: "Blue", color: "hsl(221, 83%, 53%)" },
+    { value: "green", label: "Green", color: "hsl(142, 76%, 36%)" },
+    { value: "purple", label: "Purple", color: "hsl(262, 83%, 58%)" },
+    { value: "orange", label: "Orange", color: "hsl(25, 95%, 53%)" },
+    { value: "red", label: "Red", color: "hsl(0, 84%, 60%)" },
+    { value: "pink", label: "Pink", color: "hsl(336, 75%, 60%)" },
+  ];
+
+  const applyTheme = (selectedTheme: string) => {
+    const root = document.documentElement;
+    if (selectedTheme === "dark") {
+      root.classList.add("dark");
+    } else if (selectedTheme === "light") {
+      root.classList.remove("dark");
+    } else {
+      // System theme
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (prefersDark) {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+    }
+  };
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
   return (
     <DashboardLayout userRole="admin">
       <div className="space-y-6">
@@ -253,21 +296,138 @@ export default function AdminSettings() {
             </Card>
           </TabsContent>
           
-          <TabsContent value="appearance">
+          <TabsContent value="appearance" className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Palette className="h-5 w-5" />
-                  Appearance Settings
+                  Theme Settings
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="text-center py-8 text-muted-foreground">
-                  <Palette className="mx-auto h-12 w-12 mb-4 opacity-50" />
-                  <p className="font-medium">Theme customization coming soon</p>
-                  <p className="text-sm">
-                    Customize colors, fonts, and branding for your platform
-                  </p>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Color Theme</Label>
+                    <div className="grid grid-cols-3 gap-3">
+                      <Button
+                        variant={theme === "light" ? "default" : "outline"}
+                        className="flex flex-col items-center gap-2 h-auto p-4"
+                        onClick={() => setTheme("light")}
+                      >
+                        <Sun className="h-5 w-5" />
+                        <span className="text-sm">Light</span>
+                        {theme === "light" && <Check className="h-4 w-4" />}
+                      </Button>
+                      <Button
+                        variant={theme === "dark" ? "default" : "outline"}
+                        className="flex flex-col items-center gap-2 h-auto p-4"
+                        onClick={() => setTheme("dark")}
+                      >
+                        <Moon className="h-5 w-5" />
+                        <span className="text-sm">Dark</span>
+                        {theme === "dark" && <Check className="h-4 w-4" />}
+                      </Button>
+                      <Button
+                        variant={theme === "system" ? "default" : "outline"}
+                        className="flex flex-col items-center gap-2 h-auto p-4"
+                        onClick={() => setTheme("system")}
+                      >
+                        <Monitor className="h-5 w-5" />
+                        <span className="text-sm">System</span>
+                        {theme === "system" && <Check className="h-4 w-4" />}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  <div className="space-y-2">
+                    <Label>Primary Color</Label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {colorOptions.map((color) => (
+                        <Button
+                          key={color.value}
+                          variant={primaryColor === color.value ? "default" : "outline"}
+                          className="flex items-center gap-2 h-auto p-3"
+                          onClick={() => setPrimaryColor(color.value)}
+                        >
+                          <div 
+                            className="w-4 h-4 rounded-full border border-border"
+                            style={{ backgroundColor: color.color }}
+                          />
+                          <span className="text-sm">{color.label}</span>
+                          {primaryColor === color.value && <Check className="h-4 w-4 ml-auto" />}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="h-5 w-5" />
+                  Display Settings
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="font-size">Font Size</Label>
+                    <Select value={fontSize} onValueChange={setFontSize}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="small">Small</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="large">Large</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Compact Mode</Label>
+                      <p className="text-sm text-muted-foreground">Reduce spacing and padding</p>
+                    </div>
+                    <Switch checked={compactMode} onCheckedChange={setCompactMode} />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Animations</Label>
+                      <p className="text-sm text-muted-foreground">Enable smooth transitions and effects</p>
+                    </div>
+                    <Switch checked={animationsEnabled} onCheckedChange={setAnimationsEnabled} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Globe className="h-5 w-5" />
+                  Branding
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="logo-url">Logo URL</Label>
+                    <Input id="logo-url" placeholder="https://yourdomain.com/logo.png" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="favicon-url">Favicon URL</Label>
+                    <Input id="favicon-url" placeholder="https://yourdomain.com/favicon.ico" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="brand-name">Brand Name</Label>
+                    <Input id="brand-name" defaultValue="RealEstate Platform" />
+                  </div>
                 </div>
               </CardContent>
             </Card>
