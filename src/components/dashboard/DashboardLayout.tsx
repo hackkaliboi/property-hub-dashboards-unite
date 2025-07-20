@@ -16,7 +16,7 @@ export function DashboardLayout({ children, userRole }: DashboardLayoutProps) {
         <div className="flex-1 flex flex-col">
           <DashboardHeader userRole={userRole} />
           
-          <main className="flex-1 p-6 space-y-6">
+          <main className="flex-1 p-6 space-y-6 bg-secondary">
             {children}
           </main>
         </div>
