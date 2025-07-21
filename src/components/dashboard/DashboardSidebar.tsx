@@ -92,14 +92,17 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
   const menuItems = getMenuItems();
 
   return (
-    <Sidebar className="w-64 lg:w-64 md:w-16 border-r bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/60">
+    <Sidebar 
+      className="border-r bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/60" 
+      collapsible="icon"
+    >
       <SidebarContent className="bg-transparent">
         <div className="p-4 border-b border-border/50">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center shrink-0 shadow-sm">
               <Building2 className="h-4 w-4 text-primary-foreground" />
             </div>
-            <div className="hidden md:block lg:block">
+            <div className="overflow-hidden">
               <h2 className="font-bold text-lg text-foreground">RealEstate</h2>
               <p className="text-xs text-muted-foreground capitalize">{userRole} Portal</p>
             </div>
@@ -107,7 +110,7 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
         </div>
 
         <SidebarGroup className="px-2 py-4">
-          <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3 pb-2 hidden md:block lg:block">
+          <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3 pb-2">
             Navigation
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -131,7 +134,7 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
                         `}
                       >
                         <IconComponent className="h-5 w-5 shrink-0" />
-                        <span className="hidden md:block lg:block font-medium text-sm truncate">
+                        <span className="font-medium text-sm truncate">
                           {item.title}
                         </span>
                       </NavLink>
