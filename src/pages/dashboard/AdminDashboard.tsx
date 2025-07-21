@@ -65,29 +65,29 @@ export default function AdminDashboard() {
   return (
     <DashboardLayout userRole="admin">
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <Shield className="h-8 w-8 text-destructive" />
+            <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
+              <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-destructive" />
               Admin Dashboard
             </h1>
             <p className="text-muted-foreground">
               Complete platform management and oversight
             </p>
           </div>
-          <div className="flex gap-2">
-            <Button variant="outline">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button variant="outline" size="sm" className="justify-start sm:justify-center">
               <Database className="mr-2 h-4 w-4" />
               System Status
             </Button>
-            <Button>
+            <Button size="sm" className="justify-start sm:justify-center">
               <BarChart3 className="mr-2 h-4 w-4" />
               Generate Report
             </Button>
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {stats.map((stat) => (
             <StatCard
               key={stat.title}
@@ -102,11 +102,11 @@ export default function AdminDashboard() {
         <SystemAlerts />
 
         <Tabs defaultValue="analytics" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="users">User Management</TabsTrigger>
-            <TabsTrigger value="properties">Properties</TabsTrigger>
-            <TabsTrigger value="activity">Activity</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+            <TabsTrigger value="analytics" className="text-xs sm:text-sm px-2 sm:px-4">Analytics</TabsTrigger>
+            <TabsTrigger value="users" className="text-xs sm:text-sm px-2 sm:px-4">Users</TabsTrigger>
+            <TabsTrigger value="properties" className="text-xs sm:text-sm px-2 sm:px-4">Properties</TabsTrigger>
+            <TabsTrigger value="activity" className="text-xs sm:text-sm px-2 sm:px-4">Activity</TabsTrigger>
           </TabsList>
           
           <TabsContent value="analytics" className="space-y-6">
@@ -131,31 +131,31 @@ export default function AdminDashboard() {
                   activities={[]}
                   title="Recent Platform Activity"
                 />
-                <div className="mt-6 grid gap-4 md:grid-cols-3">
-                  <Card className="p-4">
+                <div className="mt-6 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                  <Card className="p-3 sm:p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Users className="h-4 w-4 text-primary" />
-                      <span className="font-medium">User Activity</span>
+                      <span className="font-medium text-sm sm:text-base">User Activity</span>
                     </div>
-                    <p className="text-2xl font-bold">0</p>
+                    <p className="text-xl sm:text-2xl font-bold">0</p>
                     <p className="text-xs text-muted-foreground">Active sessions today</p>
                   </Card>
                   
-                  <Card className="p-4">
+                  <Card className="p-3 sm:p-4">
                     <div className="flex items-center gap-2 mb-2">
                       <Building2 className="h-4 w-4 text-success" />
-                      <span className="font-medium">Property Views</span>
+                      <span className="font-medium text-sm sm:text-base">Property Views</span>
                     </div>
-                    <p className="text-2xl font-bold">0</p>
+                    <p className="text-xl sm:text-2xl font-bold">0</p>
                     <p className="text-xs text-muted-foreground">Views today</p>
                   </Card>
                   
-                  <Card className="p-4">
+                  <Card className="p-3 sm:p-4 sm:col-span-2 lg:col-span-1">
                     <div className="flex items-center gap-2 mb-2">
                       <DollarSign className="h-4 w-4 text-accent" />
-                      <span className="font-medium">Transactions</span>
+                      <span className="font-medium text-sm sm:text-base">Transactions</span>
                     </div>
-                    <p className="text-2xl font-bold">0</p>
+                    <p className="text-xl sm:text-2xl font-bold">0</p>
                     <p className="text-xs text-muted-foreground">Completed today</p>
                   </Card>
                 </div>

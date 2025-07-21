@@ -87,29 +87,29 @@ export default function AdminSettings() {
   return (
     <DashboardLayout userRole="admin">
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <Settings className="h-8 w-8 text-primary" />
+            <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
+              <Settings className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
               System Settings
             </h1>
             <p className="text-muted-foreground">
               Configure platform settings and preferences
             </p>
           </div>
-          <Button>
+          <Button size="sm" className="self-start sm:self-center">
             <Save className="mr-2 h-4 w-4" />
             Save Changes
           </Button>
         </div>
 
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="general">General</TabsTrigger>
-            <TabsTrigger value="email">Email</TabsTrigger>
-            <TabsTrigger value="security">Security</TabsTrigger>
-            <TabsTrigger value="notifications">Notifications</TabsTrigger>
-            <TabsTrigger value="appearance">Appearance</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 h-auto">
+            <TabsTrigger value="general" className="text-xs sm:text-sm px-2 sm:px-4">General</TabsTrigger>
+            <TabsTrigger value="email" className="text-xs sm:text-sm px-2 sm:px-4">Email</TabsTrigger>
+            <TabsTrigger value="security" className="text-xs sm:text-sm px-2 sm:px-4">Security</TabsTrigger>
+            <TabsTrigger value="notifications" className="text-xs sm:text-sm px-2 sm:px-4 col-span-2 sm:col-span-1">Notifications</TabsTrigger>
+            <TabsTrigger value="appearance" className="text-xs sm:text-sm px-2 sm:px-4 col-span-2 sm:col-span-2 lg:col-span-1">Appearance</TabsTrigger>
           </TabsList>
           
           <TabsContent value="general" className="space-y-6">
@@ -121,7 +121,7 @@ export default function AdminSettings() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="platform-name">Platform Name</Label>
                     <Input id="platform-name" defaultValue="RealEstate Platform" />
@@ -178,7 +178,7 @@ export default function AdminSettings() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="smtp-host">SMTP Host</Label>
                     <Input id="smtp-host" placeholder="smtp.yourdomain.com" />
@@ -189,7 +189,7 @@ export default function AdminSettings() {
                   </div>
                 </div>
                 
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="smtp-username">Username</Label>
                     <Input id="smtp-username" placeholder="noreply@yourdomain.com" />
@@ -330,58 +330,58 @@ export default function AdminSettings() {
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label>Color Theme</Label>
-                    <div className="grid grid-cols-3 gap-3">
+                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                        <Button
                          variant={theme === "light" ? "default" : "outline"}
-                         className="flex flex-col items-center gap-2 h-auto p-4 bg-card border-border"
+                         className="flex flex-col items-center gap-2 h-auto p-3 sm:p-4 bg-card border-border"
                          onClick={() => setTheme("light")}
                        >
-                         <Sun className="h-5 w-5" />
-                         <span className="text-sm">Light</span>
-                         {theme === "light" && <Check className="h-4 w-4" />}
+                         <Sun className="h-4 w-4 sm:h-5 sm:w-5" />
+                         <span className="text-xs sm:text-sm">Light</span>
+                         {theme === "light" && <Check className="h-3 w-3 sm:h-4 sm:w-4" />}
                        </Button>
                        <Button
                          variant={theme === "dark" ? "default" : "outline"}
-                         className="flex flex-col items-center gap-2 h-auto p-4 bg-card border-border"
+                         className="flex flex-col items-center gap-2 h-auto p-3 sm:p-4 bg-card border-border"
                          onClick={() => setTheme("dark")}
                        >
-                         <Moon className="h-5 w-5" />
-                         <span className="text-sm">Dark</span>
-                         {theme === "dark" && <Check className="h-4 w-4" />}
+                         <Moon className="h-4 w-4 sm:h-5 sm:w-5" />
+                         <span className="text-xs sm:text-sm">Dark</span>
+                         {theme === "dark" && <Check className="h-3 w-3 sm:h-4 sm:w-4" />}
                        </Button>
                        <Button
                          variant={theme === "system" ? "default" : "outline"}
-                         className="flex flex-col items-center gap-2 h-auto p-4 bg-card border-border"
+                         className="flex flex-col items-center gap-2 h-auto p-3 sm:p-4 bg-card border-border"
                          onClick={() => setTheme("system")}
                        >
-                         <Monitor className="h-5 w-5" />
-                         <span className="text-sm">System</span>
-                         {theme === "system" && <Check className="h-4 w-4" />}
+                         <Monitor className="h-4 w-4 sm:h-5 sm:w-5" />
+                         <span className="text-xs sm:text-sm">System</span>
+                         {theme === "system" && <Check className="h-3 w-3 sm:h-4 sm:w-4" />}
                        </Button>
-                    </div>
+                     </div>
                   </div>
 
                   <Separator />
 
                   <div className="space-y-2">
                     <Label>Primary Color</Label>
-                    <div className="grid grid-cols-3 gap-2">
+                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                        {colorOptions.map((color) => (
                          <Button
                            key={color.value}
                            variant={primaryColor === color.value ? "default" : "outline"}
-                           className="flex items-center gap-2 h-auto p-3 bg-card border-border"
+                           className="flex items-center gap-2 h-auto p-2 sm:p-3 bg-card border-border"
                            onClick={() => setPrimaryColor(color.value)}
                          >
                            <div 
-                             className="w-4 h-4 rounded-full border border-border"
+                             className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border border-border flex-shrink-0"
                              style={{ backgroundColor: color.color }}
                            />
-                           <span className="text-sm">{color.label}</span>
-                           {primaryColor === color.value && <Check className="h-4 w-4 ml-auto" />}
+                           <span className="text-xs sm:text-sm flex-1 text-left">{color.label}</span>
+                           {primaryColor === color.value && <Check className="h-3 w-3 sm:h-4 sm:w-4 ml-auto flex-shrink-0" />}
                          </Button>
                        ))}
-                    </div>
+                     </div>
                   </div>
                 </div>
               </CardContent>
